@@ -1,18 +1,18 @@
 {
-    "name": "lotous/elibom-laravel",
-    "description": "Laravel Package for Elibom's PHP Client",
+    "name": "w360co/masiv-laravel",
+    "description": "Laravel Package for Masiv PHP Client",
     "license": "MIT",
     "type": "library",
     "authors": [
         {
             "name": "Elbert Tous",
-            "email": "contact@lotous.com.co",
+            "email": "elbert.tous@w360.co",
             "role": "Developer",
             "homepage": "https://lotous.com.co"
         }
     ],
     "support": {
-        "email": "contact@lotous.com.co"
+        "email": "elbert.tous@w360.co"
     },
     "require": {
         "php": "^8.2",
@@ -26,21 +26,21 @@
     },
     "autoload": {
         "psr-4": {
-            "Lotous\\Elibom\\": "src/"
+            "W360\\Masiv\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Lotous\\Elibom\\Tests\\": "tests/"
+            "W360\\Masiv\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Lotous\\Elibom\\ElibomServiceProvider"
+                "W360\\Masiv\\MasivServiceProvider"
             ],
             "aliases": {
-                "Elibom": "Lotous\\Elibom\\Facade\\Elibom"
+                "Masiv": "W360\\Masiv\\Facade\\Masiv"
             }
         }
     }

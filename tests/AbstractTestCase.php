@@ -1,10 +1,10 @@
 <?php
 
-namespace Lotous\Elibom\Tests;
+namespace W360\Masiv\Tests;
 
 use Orchestra\Testbench\TestCase;
-use Lotous\Elibom\ElibomServiceProvider;
-use Lotous\Elibom\Client;
+use W360\Masiv\MasivServiceProvider;
+use W360\Masiv\Client;
 
 abstract class AbstractTestCase extends TestCase
 {
@@ -15,7 +15,7 @@ abstract class AbstractTestCase extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-            ElibomServiceProvider::class,
+            MasivServiceProvider::class,
         ];
     }
 
@@ -26,7 +26,7 @@ abstract class AbstractTestCase extends TestCase
     protected function getPackageAliases($app)
     {
         return [
-            'Elibom' => \Lotous\Elibom\Facade\Elibom::class,
+            'Masiv' => \W360\Masiv\Facade\Masiv::class,
         ];
     }
 

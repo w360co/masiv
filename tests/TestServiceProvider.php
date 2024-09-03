@@ -1,8 +1,8 @@
 <?php
 
-namespace Lotous\Elibom\Tests;
+namespace W360\Masiv\Tests;
 
-use Lotous\Elibom\Client;
+use W360\Masiv\Client;
 
 class TestServiceProvider extends AbstractTestCase
 {
@@ -12,8 +12,8 @@ class TestServiceProvider extends AbstractTestCase
      */
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('elibom.api_key', 'my_api_key');
-        $app['config']->set('elibom.api_secret', 'my_secret');
+        $app['config']->set('masiv.api_key', 'my_api_key');
+        $app['config']->set('masiv.api_secret', 'my_secret');
     }
 
     /**

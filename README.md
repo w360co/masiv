@@ -3,14 +3,14 @@
 Unofficial library to consume Masiv SMS rest api service
 
 
-<a href="https://github.com/w360/masiv-laravel/actions"><img src="https://github.com/w360/masiv-laravel/actions/workflows/laravel-test.yml/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/w360/masiv-laravel"><img src="https://img.shields.io/packagist/dt/w360/masiv-laravel" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/w360/masiv-laravel"><img src="https://img.shields.io/packagist/v/w360/masiv-laravel" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/w360/masiv-laravel"><img src="https://img.shields.io/packagist/l/w360/masiv-laravel" alt="License"></a>
+<a href="https://github.com/w360co/masiv-laravel/actions"><img src="https://github.com/w360co/masiv-laravel/actions/workflows/laravel-test.yml/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/w360co/masiv-laravel"><img src="https://img.shields.io/packagist/dt/w360co/masiv-laravel" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/w360co/masiv-laravel"><img src="https://img.shields.io/packagist/v/w360co/masiv-laravel" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/w360co/masiv-laravel"><img src="https://img.shields.io/packagist/l/w360co/masiv-laravel" alt="License"></a>
 
 ## Instalation
 
-composer required w360/masiv-laravel
+composer required w360co/masiv-laravel
 
 ## Official Documentation
 
@@ -22,7 +22,7 @@ Thank you for considering contributing to Masiv Notification Channel! The contri
 
 ## Security Vulnerabilities
 
-Please review [our security policy](https://github.com/w360/masiv-laravel/security/policy) on how to report security vulnerabilities.
+Please review [our security policy](https://github.com/w360co/masiv-laravel/security/policy) on how to report security vulnerabilities.
 
 ## License
 

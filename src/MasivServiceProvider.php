@@ -3,7 +3,7 @@
  * Masiv Client Library for PHP
  *
  * @copyright Copyright (c) 2020 W360, Inc. (https://lotous.com.co)
- * @license   https://github.com/lotous/elibom/blob/master/LICENSE MIT License
+ * @license   https://github.com/lotous/masiv/blob/master/LICENSE MIT License
  */
 
 namespace W360\Masiv;
@@ -30,19 +30,19 @@ class MasivServiceProvider extends ServiceProvider
     public function boot()
     {
         // Config file path.
-        $dist = __DIR__.'/../config/elibom.php';
+        $dist = __DIR__.'/../config/masiv.php';
 
         // If we're installing in to a Lumen project, config_path
         // won't exist so we can't auto-publish the config
         if (function_exists('config_path')) {
             // Publishes config File.
             $this->publishes([
-                $dist => config_path('elibom.php'),
+                $dist => config_path('masiv.php'),
             ]);
         }
 
         // Merge config.
-        $this->mergeConfigFrom($dist, 'elibom');
+        $this->mergeConfigFrom($dist, 'masiv');
     }
 
     /**
@@ -81,18 +81,18 @@ class MasivServiceProvider extends ServiceProvider
     {
         // Check for Masiv config file.
         if (! $this->hasMasivConfigSection()) {
-            $this->raiseRunTimeException('Missing elibom configuration section.');
+            $this->raiseRunTimeException('Missing masiv configuration section.');
         }
 
         // Get Client Options.
-        $options = array_diff_key($config->get('elibom'), ['api_key', 'api_secret', 'app', 'api_url', 'api_version']);
+        $options = array_diff_key($config->get('masiv'), ['api_key', 'api_secret', 'app', 'api_url', 'api_version']);
 
         $basicCredentials = null;
-        if ($this->elibomConfigHas('api_key') && $this->elibomConfigHas('api_secret')) {
-            $basicCredentials = $this->createBasicCredentials($config->get('elibom.api_key'), $config->get('elibom.api_secret'));
+        if ($this->masivConfigHas('api_key') && $this->masivConfigHas('api_secret')) {
+            $basicCredentials = $this->createBasicCredentials($config->get('masiv.api_key'), $config->get('masiv.api_secret'));
         }
 
-        if($this->elibomConfigHasNo('api_key') or $this->elibomConfigHasNo('api_secret')){
+        if($this->masivConfigHasNo('api_key') or $this->masivConfigHasNo('api_secret')){
             $this->raiseRunTimeException(
                 'api key and secret key have no value assigned, please check your configuration file'
             );
@@ -108,12 +108,12 @@ class MasivServiceProvider extends ServiceProvider
                 'Please provide Masiv API credentials. Possible combinations: '
                 . join(", ", $possibleMasivKeys)
             );
-            return null;
+            return;
         }
 
         $httpClient = null;
-        if ($this->elibomConfigHas('http_client')) {
-            $httpClient = $this->app->make($config->get(('elibom.http_client')));
+        if ($this->masivConfigHas('http_client')) {
+            $httpClient = $this->app->make($config->get(('masiv.http_client')));
         }
 
         return new Client($credentials, $options, $httpClient);
@@ -127,7 +127,7 @@ class MasivServiceProvider extends ServiceProvider
     protected function hasMasivConfigSection()
     {
         return $this->app->make(Config::class)
-                         ->has('elibom');
+                         ->has('masiv');
     }
 
     /**
@@ -138,9 +138,9 @@ class MasivServiceProvider extends ServiceProvider
      *
      * @return bool
      */
-    protected function elibomConfigHasNo($key)
+    protected function masivConfigHasNo($key)
     {
-        return ! $this->elibomConfigHas($key);
+        return ! $this->masivConfigHas($key);
     }
 
     /**
@@ -151,20 +151,20 @@ class MasivServiceProvider extends ServiceProvider
      *
      * @return bool
      */
-    protected function elibomConfigHas($key)
+    protected function masivConfigHas($key)
     {
         /** @var Config $config */
         $config = $this->app->make(Config::class);
 
         // Check for Masiv config file.
-        if (! $config->has('elibom')) {
+        if (! $config->has('masiv')) {
             return false;
         }
 
         return
-            $config->has('elibom.'.$key) &&
-            ! is_null($config->get('elibom.'.$key)) &&
-            ! empty($config->get('elibom.'.$key));
+            $config->has('masiv.'.$key) &&
+            ! is_null($config->get('masiv.'.$key)) &&
+            ! empty($config->get('masiv.'.$key));
     }
 
     /**

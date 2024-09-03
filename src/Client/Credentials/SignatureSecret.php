@@ -1,12 +1,12 @@
 <?php
 /**
- * Elibom Client Library for PHP
+ * Masiv Client Library for PHP
  *
- * @copyright Copyright (c) 2020 Lotous, Inc. (https://lotous.com.co)
- * @license   https://github.com/lotous/elibom/blob/master/LICENSE MIT License
+ * @copyright Copyright (c) 2020 W360, Inc. (https://lotous.com.co)
+ * @license   https://github.com/lotous/masiv/blob/master/LICENSE MIT License
  */
 
-namespace Lotous\Elibom\Client\Credentials;
+namespace W360\Masiv\Client\Credentials;
 
 class SignatureSecret extends AbstractCredentials implements CredentialsInterface
 {

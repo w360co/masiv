@@ -1,21 +1,22 @@
 <?php
 /**
- * Elibom Client Library for PHP
+ * Masiv Client Library for PHP
  *
- * @copyright Copyright (c) 2020 Lotous, Inc. (https://lotous.com.co)
- * @license   https://github.com/lotous/elibom/blob/master/LICENSE MIT License
+ * @copyright Copyright (c) 2020 W360, Inc. (https://w360.co)
+ * @license   https://github.com/w360/masiv/blob/master/LICENSE MIT License
  */
 
-namespace Lotous\Elibom;
+namespace W360\Masiv;
 
 use Composer\InstalledVersions;
-use Lotous\Elibom\Client\Credentials\Container;
-use Lotous\Elibom\Client\Credentials\SignatureSecret;
+use GuzzleHttp\Psr7\Uri;
+use W360\Masiv\Client\Credentials\Container;
+use W360\Masiv\Client\Credentials\SignatureSecret;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Laminas\Diactoros\Request;
-use Lotous\Elibom\Client\Credentials\CredentialsInterface;
-use Lotous\Elibom\Client\Credentials\Basic;
+use W360\Masiv\Client\Credentials\CredentialsInterface;
+use W360\Masiv\Client\Credentials\Basic;
 use RuntimeException;
 
 
@@ -30,7 +31,7 @@ class Client
     /**
      *
      */
-    const BASE_API = 'https://www.elibom.com/';
+    const BASE_API = 'https://api-sms.masivapp.com';
 
     /**
      * @var
@@ -68,23 +69,21 @@ class Client
     public function __construct(CredentialsInterface $credentials, $options = array(), ClientInterface $client = null)
     {
 
-
         if (is_null($client)) {
             // Since the user did not pass a client, try and make a client
             // using the Guzzle 6 adapter or Guzzle 7 (depending on availability)
             list($guzzleVersion) = explode('@', InstalledVersions::getVersion('guzzlehttp/guzzle'), 1);
-            $guzzleVersion = (float) $guzzleVersion;
+            $guzzleVersion = (float)$guzzleVersion;
 
             if ($guzzleVersion >= 6.0 && $guzzleVersion < 7) {
                 /** @noinspection CallableParameterUseCaseInTypeContextInspection */
                 /** @noinspection PhpUndefinedNamespaceInspection */
                 /** @noinspection PhpUndefinedClassInspection */
                 $client = new \Http\Adapter\Guzzle6\Client();
-            }
-
-            if ($guzzleVersion >= 7.0 && $guzzleVersion < 8.0) {
+            } else {
                 $client = new \GuzzleHttp\Client();
             }
+
         }
 
         $this->setHttpClient($client);
@@ -94,7 +93,7 @@ class Client
             !($credentials instanceof Basic) &&
             !($credentials instanceof SignatureSecret)
         ) {
-            throw new RuntimeException('unknown credentials type: ' .  get_class($credentials));
+            throw new RuntimeException('unknown credentials type: ' . get_class($credentials));
         }
 
         $this->credentials = $credentials;
@@ -247,7 +246,7 @@ class Client
         $userAgent = [];
 
         // Library name
-        $userAgent[] = 'elibom-laravel/' . $this->getVersion();
+        $userAgent[] = 'masiv-laravel/' . $this->getVersion();
 
         // Language name
         $userAgent[] = 'php/' . PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION;
@@ -269,7 +268,7 @@ class Client
      */
     protected function getVersion()
     {
-        return InstalledVersions::getVersion('lotous/elibom-laravel');
+        return InstalledVersions::getVersion('w360co/masiv-laravel');
     }
 
     /**
@@ -284,16 +283,7 @@ class Client
         if (isset($campaign)) {
             $data['campaign'] = $campaign;
         }
-        return $this->post('messages', $data);
-    }
-
-    /**
-     * @param $deliveryToken
-     * @return mixed
-     */
-    public function getDelivery($deliveryToken)
-    {
-        return $this->get('messages/' . $deliveryToken);
+        return $this->post('send-message', $data);
     }
 
     /**
@@ -303,65 +293,16 @@ class Client
      * @param $campaign
      * @return mixed
      */
-    public function scheduleMessage($to, $txt, $date, $campaign = null)
+    public function sendScheduleMessage($to, $txt, $date, $campaign = null)
     {
         $data = array("to" => $to, "text" => $txt, "scheduleDate" => $date);
         if (isset($campaign)) {
             $data['campaign'] = $campaign;
         }
-        return $this->post('messages', $data);
+        return $this->post('message-scheduler/send', $data);
     }
 
-    /**
-     * @param $scheduleId
-     * @return mixed
-     */
-    public function getScheduledMessage($scheduleId)
-    {
-        return $this->get('schedules/' . $scheduleId);
-    }
 
-    /**
-     * @return mixed
-     */
-    public function getScheduledMessages()
-    {
-        return $this->get('schedules/scheduled');
-    }
-
-    /**
-     * @param $scheduleId
-     * @return mixed
-     */
-    public function unscheduleMessage($scheduleId)
-    {
-        return $this->delete('schedules/' . $scheduleId);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUsers()
-    {
-        return $this->get('users');
-    }
-
-    /**
-     * @param $userId
-     * @return mixed
-     */
-    public function getUser($userId)
-    {
-        return $this->get('users/' . $userId);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAccount()
-    {
-        return $this->get('account');
-    }
 }
 
 ?>
